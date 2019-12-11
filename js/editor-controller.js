@@ -1,13 +1,16 @@
 'use strict'
 
-let gCanvas, gCtx, gCurrImg;
+let gCanvas, gCtx, gCurrImg, gLocationX = 100, gLocationY = 100;
 
 
 function init() {
     createImages();
     gCanvas = document.querySelector("#my-canvas");
+    gCanvas.addEventListener('click', (ev) => { onSetLocation(ev) })
     gCtx = gCanvas.getContext("2d");
     gCtx.font = "30px Impact";
+    gCtx.strokeStyle = "black";
+    gCtx.fillStyle = "white";
     // resizeCanvas()
     // window.addEventListener('resize',
     //     function () {
@@ -17,27 +20,10 @@ function init() {
     //     })
 }
 
-function setShapeAndColors() {
-    gCurrShape = document.querySelector(".shape-option").value
-    gCtx.fillStyle = document.querySelector('#fill-color').value
-    gCtx.strokeStyle = document.querySelector('#strike-color').value
-}
-
-function getMeme(imgId) {
-    let txts = []
-    txts.push(setTxtAndStyle())
-    return createMeme(imgId, 0, txts)
-}
-
-function setTxtAndStyle() {
-    let txt = document.querySelector('.txt-input').value
-    console.log(txt)
-    return {
-        line: txt,
-        size: 20,
-        align: 'left',
-        color: 'red'
-    }
+function setImg(imgId) {
+    gCurrImg = findImgById(imgId);
+    createMeme(imgId)
+    openEditor()
 }
 
 function openEditor() {
@@ -46,39 +32,70 @@ function openEditor() {
     drawMeme();
 }
 
-function setImg(imgId) {
-    gCurrImg = findImgById(imgId);
-    openEditor()
+function setTxtsAndStyle() {
+    let meme = getCurrMeme();
+    let txt = document.querySelector('.txt-input').value
+    meme.txts.splice(meme.selectedTxtIdx,0,{
+        line: txt
+    })
+    updateCurrMeme(meme)
+    drawMeme();
+}
+
+function onSetTxtInputIdx() {
+    let meme = getCurrMeme()
+    if (!meme.selectedTxtIdx) meme.selectedTxtIdx = 1;
+    else meme.selectedTxtIdx = 0
 }
 
 function drawMeme() {
-    let meme = getMeme(gCurrImg.id);
-
     let gImg = new Image()
     let img = gCurrImg;
     gImg.onload = () => {
+        let meme = getCurrMeme();
+        console.log(meme)
         gCtx.drawImage(gImg, 0, 0, gCanvas.width, gCanvas.height)
-        drawText(meme.txts[meme.selectedTxtIdx].line, 100, 100);
+        if (meme.txts) {
+            for (let i = 0; i < meme.txts.length; i++) {
+                drawText(meme.txts[i].line, gLocationX, gLocationY)
+            }
+        }
     };
     gImg.src = img.url
     // NOTE: the proportion of the image - should be as the canvas, otherwise the image gets distorted
 }
 
-// function setMemeImg(){
-
-// }
-
-// function renderCanvas(meme) {
-// gCanvas.width = img.width;
-//     gCanvas.height = img.height;
-//     gCtx.drawImage(img, 0, 0);
-//     gCtx.drawText(txt,x,y)
-// }
-
-
 function drawText(txt, x, y) {
     gCtx.fillText(txt, x, y);
     gCtx.strokeText(txt, x, y);
+}
+
+function onUpdateFontSize(diff) {
+    let currFontSize = parseInt(gCtx.font.split(' ')[0])
+    let newFontSize = currFontSize + diff;
+    gCtx.font = `${newFontSize}px Impact`
+}
+
+function onSetLocation(ev) {
+    gLocationX = ev.offsetX
+    gLocationY = ev.offsetY
+}
+
+
+
+
+
+
+
+
+
+
+
+
+function setShapeAndColors() {
+    gCurrShape = document.querySelector(".shape-option").value
+    gCtx.fillStyle = document.querySelector('#fill-color').value
+    gCtx.strokeStyle = document.querySelector('#strike-color').value
 }
 
 function downloadCanvas(elLink) {
@@ -88,7 +105,7 @@ function downloadCanvas(elLink) {
 }
 
 function resizeCanvas() {
-    var elContainer =
+    let elContainer =
         document.querySelector('.canvas-container');
     // Note: changing the canvas dimension this way clears the canvas
     gCanvas.width = elContainer.offsetWidth - 100
@@ -96,4 +113,3 @@ function resizeCanvas() {
 
     // TODO: redraw..
 }
-

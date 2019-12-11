@@ -2,6 +2,10 @@ body{
     background-color: rgb(206, 199, 190);
 }
 
+.canvas-container{
+    position:relative
+}
+
 /* helpers */
 
 

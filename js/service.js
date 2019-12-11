@@ -1,6 +1,6 @@
 'use strict'
 
-let gImgs = [], gNextId = 1;
+let gImgs = [], gNextId = 1, gCurrMeme;
 
 
 function createImage(url, keywords) {
@@ -17,7 +17,7 @@ function createImages() {
     }
 }
 
-function getImgs(){
+function getImgs() {
     return gImgs
 }
 
@@ -27,11 +27,19 @@ function findImgById(imgId) {
     });
 }
 
-function createMeme(selectedImgId, selectedTxtIdx, txts) {
-    let gMeme = {
-        selectedImgId,
-        selectedTxtIdx,
-        txts
+function createMeme(selectedImgId) {
+    let meme = {
+        selectedImgId: findImgById(selectedImgId),
+        selectedTxtIdx:0,
+        txts:[]
     }
-    return gMeme;
+    gCurrMeme = meme
+}
+
+function updateCurrMeme(meme) {
+    gCurrMeme = meme
+}
+
+function getCurrMeme() {
+    return gCurrMeme
 }
