@@ -1,6 +1,28 @@
 'use strict'
 
-let gImgs = [], gNextId = 1, gMeme;
+let gImgs = [], gNextId = 1;
+
+function createMeme() {
+    let gMeme = {
+        selectedImgId: 4,
+        selectedTxtIdx: 0,
+        txts: [
+            {
+                line: 'I never eat Falafel',
+                size: 20,
+                align: 'left',
+                color: 'red'
+            },
+            {
+                line: 'I never eat Falafel',
+                size: 20,
+                align: 'left',
+                color: 'red'
+            }
+        ]
+    }
+    return gMeme;
+}
 
 function createImage(url, keywords) {
     return {
@@ -10,7 +32,7 @@ function createImage(url, keywords) {
     }
 }
 
-function createImages() { 
+function createImages() {
     for (let i = 1; i < 18; i++) {
         gImgs.push(createImage(`img/${i}.jpg`, ['funny']))
     }
@@ -22,19 +44,13 @@ function findImgById(imgId) {
     });
 }
 
-function createMeme(ImgId, TxtIdx, txts) {
+function createMeme(selectedImgId, selectedTxtIdx, txts) {
     let gMeme = {
-        selectedImgId: findImgById(ImgId),
+        selectedImgId,
         selectedTxtIdx,
-        txts: [
-            {
-                line: 'I never eat Falafel',
-                size: 20,
-                align: 'left',
-                color: 'red'
-            }
-        ]
+        txts
     }
+    return gMeme;
 }
 
 
