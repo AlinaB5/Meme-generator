@@ -11,7 +11,33 @@
 </head>
 
 <body onload="init();renderGallery()">
-    <div class="gallery-container">
+
+    <nav class="main-nav">
+        <div class="nav-container flex space-between align-center">
+            <div class="main-logo">memegen</div>
+            <ul class="main-menu clean-list flex space-between align-center">
+                <li><a class="menu-item totally-center active">Gallery</a></li>
+                <li class="separator "></li>
+                <li><a class="menu-item totally-center">About</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="main-content grid">
+        <search class="main-search">
+            <label for="site-search">Enter search keyword</label>
+            <input type="search" id="site-search">
+        </search>
+        <div class="main-gallery totally-center">
+            <div class="gallery-container grid"></div>
+        </div>
+        <section class="more-info">
+            <h3>Monica Geller</h3>
+            <p>is a fictional character, one of the six main characters who appears on the American sitcom Friends </p>
+        </section>
+        <footer class="footer totally-center column">
+            <div class="main-logo">memegen</div>
+            <div class="rights">all rights reserved 2019</div>
+        </footer>
     </div>
     <div class="canvas-container hidden">
         <canvas id="my-canvas" width="400" height="400" style="border:1px solid #000000;">
@@ -25,7 +51,8 @@
             <img src="Meme1 - Sergei\ICONS\decrease font - icon.png" width="20px" onclick="onUpdateFontSize(-2)">
         </button>
         <button>
-            <img src="Meme1 - Sergei\ICONS\up-and-down-opposite-double-arrows-side-by-side.png" width="20px" onclick="onSetTxtInputIdx()">
+            <img src="Meme1 - Sergei\ICONS\up-and-down-opposite-double-arrows-side-by-side.png" width="20px"
+                onclick="onSetTxtInputIdx()">
         </button>
         <!-- <button onclick="startOver()">Start Over</button> -->
 

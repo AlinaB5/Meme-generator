@@ -1,12 +1,11 @@
-body{
-    background-color: rgb(206, 199, 190);
+
+
+
+/* Base */
+
+button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
 }
-
-.canvas-container{
-    position:relative
-}
-
-/* helpers */
-
-
-

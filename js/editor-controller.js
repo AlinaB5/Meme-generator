@@ -6,7 +6,7 @@ let gCanvas, gCtx, gCurrImg, gLocationX = 100, gLocationY = 100;
 function init() {
     createImages();
     gCanvas = document.querySelector("#my-canvas");
-    gCanvas.addEventListener('click', (ev) => { onSetLocation(ev) })
+    // gCanvas.addEventListener('click', (ev) => { onSetLocation(ev)})
     gCtx = gCanvas.getContext("2d");
     gCtx.font = "30px Impact";
     gCtx.strokeStyle = "black";
@@ -35,9 +35,7 @@ function openEditor() {
 function setTxtsAndStyle() {
     let meme = getCurrMeme();
     let txt = document.querySelector('.txt-input').value
-    meme.txts.splice(meme.selectedTxtIdx,0,{
-        line: txt
-    })
+    meme.txts[meme.selectedTxtIdx].line = txt;
     updateCurrMeme(meme)
     drawMeme();
 }
@@ -55,11 +53,8 @@ function drawMeme() {
         let meme = getCurrMeme();
         console.log(meme)
         gCtx.drawImage(gImg, 0, 0, gCanvas.width, gCanvas.height)
-        if (meme.txts) {
-            for (let i = 0; i < meme.txts.length; i++) {
-                drawText(meme.txts[i].line, gLocationX, gLocationY)
-            }
-        }
+            drawText(meme.txts[0].line, gLocationX, gLocationY)
+            drawText(meme.txts[1].line, gLocationX, gLocationY+200)
     };
     gImg.src = img.url
     // NOTE: the proportion of the image - should be as the canvas, otherwise the image gets distorted

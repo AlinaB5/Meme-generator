@@ -12,7 +12,7 @@ function createImage(url, keywords) {
 }
 
 function createImages() {
-    for (let i = 1; i < 18; i++) {
+    for (let i = 1; i < 10; i++) {
         gImgs.push(createImage(`img/${i}.jpg`, ['funny']))
     }
 }
@@ -30,8 +30,12 @@ function findImgById(imgId) {
 function createMeme(selectedImgId) {
     let meme = {
         selectedImgId: findImgById(selectedImgId),
-        selectedTxtIdx:0,
-        txts:[]
+        selectedTxtIdx: 0,
+        txts: [{
+            line: ''
+        },{
+            line: ''
+        }]
     }
     gCurrMeme = meme
 }
