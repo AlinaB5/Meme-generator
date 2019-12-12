@@ -29,12 +29,18 @@ function findImgById(imgId) {
 
 function createMeme(selectedImgId) {
     let meme = {
-        selectedImgId: findImgById(selectedImgId),
+        selectedImg: findImgById(selectedImgId),
         selectedTxtIdx: 0,
         txts: [{
-            line: ''
-        },{
-            line: ''
+            line: '',
+            size: 20,
+            x: 80,
+            y: 80
+        }, {
+            line: '',
+            size: 20,
+            x: 80,
+            y: gCanvas.height - 80
         }]
     }
     gCurrMeme = meme
