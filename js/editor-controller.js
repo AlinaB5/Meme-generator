@@ -9,16 +9,6 @@ function init() {
     gCanvas = document.querySelector("#my-canvas");
     gCanvas.addEventListener('click', (ev) => { onSetLocation(ev) })
     gCtx = gCanvas.getContext("2d");
-    gCtx.font = "30px Impact";
-    gCtx.strokeStyle = "black";
-    gCtx.fillStyle = "white";
-    // resizeCanvas()
-    // window.addEventListener('resize',
-    //     function () {
-    //         gCanvas.width = window.innerWidth - 50
-    //         gCanvas.height = window.innerHeight - 100;
-    //         drawImg()
-    //     })
 }
 
 function setImg(imgId) {
@@ -59,22 +49,28 @@ function onSetTxts() {
     drawMeme();
 }
 
-function onSetTxtInputIdx() {
+function onSetTxtIdx() {
     let meme = getCurrMeme();
     let txtIdx = meme.selectedTxtIdx
     if (txtIdx < meme.txts.length - 1) {
         meme.selectedTxtIdx++;
         updateCurrMeme(meme);
-        document.querySelector('.txt-input').value = '';
     } else {
         meme.selectedTxtIdx = 0
     }
+    document.querySelector('.txt-input').value = meme.txts[meme.selectedTxtIdx].line;
 }
 
 function onAddLine() {
     let meme = getCurrMeme();
-    meme.txts.push({ line: '', size: 20, x: 80, y: (gCanvas.height / 2) })
+    meme.txts.push({ line: '', size: 40, x: 80, y: (gCanvas.height / 2) })
+    meme.selectedTxtIdx = meme.txts.length - 1;
+    document.querySelector('.txt-input').value = '';
     updateCurrMeme(meme);
+    if (meme.txts.length > 0) {
+        let elDeleteBtn = document.querySelector(".delete-btn")
+        elDeleteBtn.classList.remove("disabled")
+    }
 }
 
 function onDeleteLine() {
@@ -82,6 +78,10 @@ function onDeleteLine() {
     let txtIdx = meme.selectedTxtIdx
     meme.txts.splice(txtIdx, 1);
     updateCurrMeme(meme);
+    if (meme.txts.length < 1) {
+        let elDeleteBtn = document.querySelector(".delete-btn")
+        elDeleteBtn.classList.add("disabled")
+    }
     drawMeme()
 }
 
@@ -95,21 +95,23 @@ function onUpdateHeight(diff) {
 }
 
 function drawMeme() {
-    let gImg = new Image()
+    let elImg = new Image()
     let img = gCurrImg;
-    gImg.onload = () => {
+    elImg.onload = () => {
+        gCanvas.width = elImg.width;
+        gCanvas.height = elImg.height;
         let meme = getCurrMeme();
-        gCtx.drawImage(gImg, 0, 0, gCanvas.width, gCanvas.height)
+        gCtx.drawImage(elImg, 0, 0, gCanvas.width, gCanvas.height);
         for (let i = 0; i < meme.txts.length; i++) {
             drawText(meme.txts[i].line, meme.txts[i].size, meme.txts[i].x, meme.txts[i].y)
         }
     };
-    gImg.src = img.url
-    // NOTE: the proportion of the image - should be as the canvas, otherwise the image gets distorted
+    elImg.src = img.url
 }
 
 function drawText(txt, size, x, y) {
     gCtx.font = `${size}px Impact`
+    gCtx.fillStyle = "white";
     gCtx.fillText(txt, x, y);
     gCtx.strokeText(txt, x, y);
 }

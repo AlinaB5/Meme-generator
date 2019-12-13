@@ -33,14 +33,14 @@ function createMeme(selectedImgId) {
         selectedTxtIdx: 0,
         txts: [{
             line: '',
-            size: 20,
+            size: 40,
             x: 80,
             y: 80
         }, {
             line: '',
-            size: 20,
+            size: 40,
             x: 80,
-            y: gCanvas.height - 80
+            y: 420
         }]
     }
     gCurrMeme = meme

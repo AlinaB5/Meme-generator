@@ -41,6 +41,7 @@ img {
     object-fit: cover;
 }
 
+
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
     font-weight: normal;
@@ -139,8 +140,8 @@ button:disabled {
 }
 
 .gallery-container>* {
-    height: 280px;
-    width: 350px;
+    max-height: 280px;
+    max-width: 350px;
 }
 
 /* Info */
@@ -208,6 +209,8 @@ button {
 
 .canvas-container {
     margin-inline-end: 100px;
+    width:fit-content;
+    object-fit: cover;
 }
 
 .controls-container {
@@ -219,7 +222,6 @@ button {
     text-align: start;
     font-size: 1.125rem;
     padding: 20px;
-    border-width: none;
     border-style: none;
     margin-block-end: 10px;
     min-width: 100%;
@@ -254,6 +256,7 @@ button {
     padding: 20px;
     border-style: none;
     width: 220px;
+    outline: none;
 }
 
 .drag-items {
@@ -265,18 +268,21 @@ button {
     background-color: #ff7f00;
     color: white;
     font-family: mont-med;
-    padding: 20px 30px;
+    padding: 20px 25px;
+    font-size: 1.25rem;
+    font-size: 1rem;
 }
 
 .share-btns>.controls-item {
     background-color: #ff7f00;
     color: white;
-    padding: 20px 30px;
+    padding: 20px 25px;
     font-family: mont-med;
+    font-size: 1rem;
 }
 
 .share-btns>.controls-item:not(:last-child) {
-    margin-inline-end: 10px;
+    margin-inline-end: 15px;
 }
 
 /* Controls-style*/
