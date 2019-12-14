@@ -1,13 +1,11 @@
 'use strict'
 
 let gCanvas, gCtx, gCurrImg;
-//gLocationX = 100, gLocationY = 100
 
 function init() {
     createImages();
     renderGallery();
     gCanvas = document.querySelector("#my-canvas");
-    // gCanvas.addEventListener('click', (ev) => { onSetLocation(ev) })
     gCtx = gCanvas.getContext("2d");
 }
 
@@ -173,7 +171,6 @@ function onUpdateFontFamily(fontFamily) {
     }
 }
 
-
 function onUpdateFontColor() {
     let meme = getCurrMeme()
     let fontColor = document.querySelector('.font-color').value
@@ -182,7 +179,6 @@ function onUpdateFontColor() {
     drawMeme()
 }
 
-
 function onUpdateStrokeColor() {
     let meme = getCurrMeme()
     let strokeColor = document.querySelector('.stroke-color').value
@@ -190,7 +186,6 @@ function onUpdateStrokeColor() {
     updateCurrMeme(meme)
     drawMeme()
 }
-
 
 function drawMeme() {
     let elImg = new Image()
@@ -218,37 +213,8 @@ function drawText(txt, fontFam, size, txtAlign, fontColor, strokeColor, x, y) {
     gCtx.strokeText(txt, x, y);
 }
 
-
 function downloadCanvas(elLink) {
     const data = gCanvas.toDataURL()
     elLink.href = data
     elLink.download = 'my-meme.png'
 }
-
-// function onSetLocation(ev) {
-//     gLocationX = ev.offsetX
-//     gLocationY = ev.offsetY
-// }
-
-// function handleMouseDown(ev) {
-//     let meme = getCurrMeme();
-//     let clickedX = ev.offsetX;
-//     let clickedY = ev.offsetY;
-//     for (let i = 0; i < meme.txts.length; i++) {
-//         console.log(meme)
-//         if (textHitTest(clickedX, clickedY, i)) {
-//             meme.selectedTxtIdx = i;
-//             updateCurrMeme(meme)
-//             console.log(meme)
-//         }
-//     }
-// }
-
-// function textHitTest(x, y, txtIdx) {
-//     let meme = getCurrMeme();
-//     let text = meme.txts[txtIdx];
-//     return (x >= text.x &&
-//         x <= text.line.length * text.size &&
-//         y >= text.y - text.size / 2 &&
-//         y <= text.y + text.size / 2);
-// }

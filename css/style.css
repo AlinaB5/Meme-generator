@@ -284,11 +284,6 @@ button {
     outline: none;
 }
 
-.drag-items {
-    max-height: 135px;
-    margin-block-end: 20px;
-}
-
 .action-btns>.controls-item {
     background-color: #ff7f00;
     color: white;
