@@ -18,14 +18,14 @@ function setImg(imgId) {
 }
 
 function onOpenEditor() {
-    document.querySelector('.menu-item.gallery').classList.remove('active')
+    document.querySelector('.menu-item.gallery-tab').classList.remove('active')
     document.querySelector('.editor-container').classList.remove('hidden')
     document.querySelector('.main-content').classList.add('hidden')
     drawMeme();
 }
 
 function onCloseEditor() {
-    document.querySelector('.menu-item.gallery').classList.add('active')
+    document.querySelector('.menu-item.gallery-tab').classList.add('active')
     document.querySelector('.editor-container').classList.add('hidden')
     document.querySelector('.main-content').classList.remove('hidden')
 }
@@ -44,7 +44,11 @@ function onSetTxts() {
     let meme = getCurrMeme();
     let txt = document.querySelector('.txt-input').value
     let txtIdx = meme.selectedTxtIdx
-    meme.txts[txtIdx].line = txt;
+    if (meme.txts.length) {
+        meme.txts[txtIdx].line = txt
+    }else{
+        onAddLine()
+    }
     updateCurrMeme(meme)
     drawMeme();
 }
@@ -77,6 +81,7 @@ function onDeleteLine() {
     let meme = getCurrMeme();
     let txtIdx = meme.selectedTxtIdx
     meme.txts.splice(txtIdx, 1);
+    document.querySelector('.txt-input').value = '';
     updateCurrMeme(meme);
     if (meme.txts.length < 1) {
         let elDeleteBtn = document.querySelector(".delete-btn")

@@ -16,9 +16,9 @@
         <div class="nav-container flex space-between align-center">
             <div class="main-logo">memegen</div>
             <ul class="main-menu clean-list flex space-between align-center">
-                <li><a class="menu-item gallery totally-center active" onclick="onCloseEditor()">Gallery</a></li>
+                <li><a class="menu-item gallery-tab totally-center active" onclick="onCloseEditor()">Gallery</a></li>
                 <li class="separator "></li>
-                <li><a class="menu-item totally-center" href ="#info-container">About</a></li>
+                <li><a class="menu-item totally-center" href="#info-container">About</a></li>
             </ul>
         </div>
     </nav>
@@ -35,7 +35,9 @@
             </div>
         </div>
         <div class="main-gallery totally-center">
-            <div class="gallery-container grid"></div>
+            <div class="gallery-container ">
+                <div class="gallery flex wrap totally-center"></div>
+            </div>
         </div>
         <div id=info-container class="info-container totally-center">
             <img src="Meme1 - Sergei\imgs\alina-kovalchuk-Cd7dYdJKIKk-unsplash.png" alt="" class="img-container" />
@@ -63,65 +65,66 @@
             <div class="controls full">
                 <input class="txt-input controls-item" type="text" placeholder="Type here" oninput="onSetTxts()">
                 <div class="txts-controls">
-                    <button title= "Move the line up" class="btn controls-item">
+                    <button title="Move the line up" class="btn controls-item">
                         <img src="Meme1 - Sergei\ICONS\arrow-up.png" width="40px" onclick="onUpdateHeight(-6)">
                     </button>
-                    <button title= "Move the line down" class="btn controls-item">
+                    <button title="Move the line down" class="btn controls-item">
                         <img src="Meme1 - Sergei\ICONS\arrow-down.png" width="40px" onclick="onUpdateHeight(6)">
                     </button>
-                    <button title= "Switch between lines" class="btn controls-item lines-switch">
+                    <button title="Switch between lines" class="btn controls-item lines-switch">
                         <img src="Meme1 - Sergei\ICONS\up-and-down-opposite-double-arrows-side-by-side.png" width="40px"
                             onclick="onSetTxtIdx()">
                     </button>
-                    <button title= "Add a new line" class="btn controls-item" onclick="onAddLine()">
+                    <button title="Add a new line" class="btn controls-item" onclick="onAddLine()">
                         <img src="Meme1 - Sergei\ICONS\add.png" width="40px">
                     </button>
-                    <button title= "Delete the line" class="btn controls-item delete-btn"onclick="onDeleteLine()">
+                    <button title="Delete the line" class="btn controls-item delete-btn" onclick="onDeleteLine()">
                         <img src="Meme1 - Sergei\ICONS\trash.png" width="40px">
                     </button>
                 </div>
                 <div class="size-align-controls flex space-between">
-                    <button title= "Increase font size" class="btn controls-item">
+                    <button title="Increase font size" class="btn controls-item">
                         <img src="Meme1 - Sergei\ICONS\increase font - icon.png" width="40px" onclick="onUpdateSize(2)">
                     </button>
-                    <button title= "Decrease font size" class="btn controls-item">
+                    <button title="Decrease font size" class="btn controls-item">
                         <img src="Meme1 - Sergei\ICONS\decrease font - icon.png" width="40px"
                             onclick="onUpdateSize(-2)">
                     </button>
-                    <button title= "Text align left" class="btn controls-item" disabled>
+                    <button title="Text align left" class="btn controls-item" disabled>
                         <img src="Meme1 - Sergei\ICONS\align-to-left.png" width="40px">
                     </button>
-                    <button title= "Text align center" class="btn controls-item" disabled>
+                    <button title="Text align center" class="btn controls-item" disabled>
                         <img src="Meme1 - Sergei\ICONS\center-text-alignment.png" width="40px">
                     </button>
-                    <button title= "Text align right" class="btn controls-item" disabled>
+                    <button title="Text align right" class="btn controls-item" disabled>
                         <img src="Meme1 - Sergei\ICONS\align-to-right.png" width="40px">
                     </button>
                 </div>
                 <div class="font-style flex">
-                    <select title= "Font options" class="font-family controls-item disabled" disabled>
+                    <select title="Font options" class="font-family controls-item disabled" disabled>
                         <option value="impact">Impact</option>
                         <option value="ariel">Ariel</option>
                         <option value="helvetica">Helvetica</option>
                         <option value="roboto">Roboto</option>
                     </select>
-                    <button title= "Outline color" class="btn controls-item" disabled>
+                    <button title="Outline color" class="btn controls-item" disabled>
                         <img src="Meme1 - Sergei\ICONS\text stroke.png" width="40px">
                     </button>
-                    <button title= "Font color" class="btn controls-item" disabled>
-                        <img  src="Meme1 - Sergei\ICONS\paint-board-and-brush.png" width="40px">
+                    <button title="Font color" class="btn controls-item" disabled>
+                        <img src="Meme1 - Sergei\ICONS\paint-board-and-brush.png" width="40px">
                     </button>
                 </div>
                 <div class="drag-items controls-item disabled"></div>
             </div>
             <div class="action-controls flex space-between">
-                <button title= "Download your meme" class="action-btns"><a class=" btn controls-item" href="#" onclick="downloadCanvas(this)"
-                        download="">Download</a></button>
+                <button title="Download your meme" class="action-btns"><a class=" btn controls-item" href="#"
+                        onclick="downloadCanvas(this)" download="">Download</a></button>
                 <form class="action-btns" action="" method="POST" enctype="multipart/form-data"
                     onsubmit="uploadImg(this, event)">
                     <input name="img" id="imgData" type="hidden" />
                     <div class="share-btns flex">
-                        <button title= "Click to share on facebook" class="btn controls-item" type="submit">Publish</button>
+                        <button title="Click to share on facebook" class="btn controls-item"
+                            type="submit">Publish</button>
                         <div title="share to facebook" class="share-container btn controls-item hidden"></div>
                     </div>
                 </form>
