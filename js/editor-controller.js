@@ -40,15 +40,17 @@ function onUpdateSize(diff) {
     drawMeme();
 }
 
-function onSetTxts() {
+function onUpdateTxts() {
     let meme = getCurrMeme();
     let txt = document.querySelector('.txt-input').value
     let txtIdx = meme.selectedTxtIdx
+
     if (meme.txts.length) {
         meme.txts[txtIdx].line = txt
-    }else{
+    } else {
         onAddLine()
     }
+    
     updateCurrMeme(meme)
     drawMeme();
 }
@@ -56,13 +58,19 @@ function onSetTxts() {
 function onSetTxtIdx() {
     let meme = getCurrMeme();
     let txtIdx = meme.selectedTxtIdx
+
     if (txtIdx < meme.txts.length - 1) {
         meme.selectedTxtIdx++;
         updateCurrMeme(meme);
     } else {
         meme.selectedTxtIdx = 0
     }
-    document.querySelector('.txt-input').value = meme.txts[meme.selectedTxtIdx].line;
+
+    if (meme.txts.length) {
+        document.querySelector('.txt-input').value = meme.txts[meme.selectedTxtIdx].line;
+    } else {
+        document.querySelector('.txt-input').value = '';
+    }
 }
 
 function onAddLine() {
@@ -71,6 +79,7 @@ function onAddLine() {
     meme.selectedTxtIdx = meme.txts.length - 1;
     document.querySelector('.txt-input').value = '';
     updateCurrMeme(meme);
+
     if (meme.txts.length > 0) {
         let elDeleteBtn = document.querySelector(".delete-btn")
         elDeleteBtn.classList.remove("disabled")
@@ -83,10 +92,13 @@ function onDeleteLine() {
     meme.txts.splice(txtIdx, 1);
     document.querySelector('.txt-input').value = '';
     updateCurrMeme(meme);
+
     if (meme.txts.length < 1) {
         let elDeleteBtn = document.querySelector(".delete-btn")
         elDeleteBtn.classList.add("disabled")
     }
+
+    onSetTxtIdx()
     drawMeme()
 }
 
