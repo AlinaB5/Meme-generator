@@ -33,12 +33,20 @@ function createMeme(selectedImgId) {
         selectedTxtIdx: 0,
         txts: [{
             line: '',
+            fontFam: 'Impact',
             size: 40,
+            txtAlign: "start",
+            fontColor: "black",
+            strokeColor: "white",
             x: 80,
             y: 80
         }, {
             line: '',
+            fontFam: 'Impact',
             size: 40,
+            txtAlign: "start",
+            fontColor: "black",
+            strokeColor: "white",
             x: 80,
             y: 420
         }]

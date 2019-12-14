@@ -1,13 +1,13 @@
 'use strict'
 
-let gCanvas, gCtx, gCurrImg, gLocationX = 100, gLocationY = 100;
-
+let gCanvas, gCtx, gCurrImg;
+//gLocationX = 100, gLocationY = 100
 
 function init() {
     createImages();
     renderGallery();
     gCanvas = document.querySelector("#my-canvas");
-    gCanvas.addEventListener('click', (ev) => { onSetLocation(ev) })
+    // gCanvas.addEventListener('click', (ev) => { onSetLocation(ev) })
     gCtx = gCanvas.getContext("2d");
 }
 
@@ -50,7 +50,7 @@ function onUpdateTxts() {
     } else {
         onAddLine()
     }
-    
+
     updateCurrMeme(meme)
     drawMeme();
 }
@@ -75,7 +75,10 @@ function onSetTxtIdx() {
 
 function onAddLine() {
     let meme = getCurrMeme();
-    meme.txts.push({ line: '', size: 40, x: 80, y: (gCanvas.height / 2) })
+    meme.txts.push({
+        line: '', size: 40, fontFam: 'Impact', txtAlign: "start", fontColor: "black",
+        strokeColor: "white", x: 80, y: (gCanvas.height / 2)
+    })
     meme.selectedTxtIdx = meme.txts.length - 1;
     document.querySelector('.txt-input').value = '';
     updateCurrMeme(meme);
@@ -111,6 +114,84 @@ function onUpdateHeight(diff) {
     drawMeme()
 }
 
+function onUpdateAlign(txtAlign) {
+    let meme = (getCurrMeme())
+    let text = meme.txts[meme.selectedTxtIdx]
+    switch (txtAlign) {
+        case "start":
+            text.txtAlign = "start"
+            text.x = 80;
+            updateCurrMeme(meme)
+            drawMeme()
+            break;
+        case "center":
+            text.txtAlign = "center"
+            text.x = gCanvas.width / 2;
+            updateCurrMeme(meme)
+            drawMeme()
+            break;
+
+        case "end":
+            text.txtAlign = "end"
+            text.x = gCanvas.width - 80;
+            updateCurrMeme(meme)
+            drawMeme()
+            break;
+    }
+}
+
+function onUpdateFontFamily(fontFamily) {
+    let meme = getCurrMeme()
+    let text = meme.txts[meme.selectedTxtIdx]
+
+    switch (fontFamily) {
+        case "impact":
+            text.fontFam = 'Impact'
+            updateCurrMeme(meme)
+            drawMeme()
+            break;
+        case "ariel":
+            text.fontFam = 'Ariel'
+            updateCurrMeme(meme)
+            drawMeme()
+            break;
+        case "helvetica":
+            text.fontFam = 'Helvetica'
+            updateCurrMeme(meme)
+            drawMeme()
+            break;
+        case "roboto":
+            text.fontFam = 'Roboto'
+            updateCurrMeme(meme)
+            drawMeme()
+            break;
+        case "calibri":
+            text.fontFam = 'Calibri'
+            updateCurrMeme(meme)
+            drawMeme()
+            break;
+    }
+}
+
+
+function onUpdateFontColor() {
+    let meme = getCurrMeme()
+    let fontColor = document.querySelector('.font-color').value
+    meme.txts[meme.selectedTxtIdx].fontColor = fontColor
+    updateCurrMeme(meme)
+    drawMeme()
+}
+
+
+function onUpdateStrokeColor() {
+    let meme = getCurrMeme()
+    let strokeColor = document.querySelector('.stroke-color').value
+    meme.txts[meme.selectedTxtIdx].strokeColor = strokeColor
+    updateCurrMeme(meme)
+    drawMeme()
+}
+
+
 function drawMeme() {
     let elImg = new Image()
     let img = gCurrImg;
@@ -120,23 +201,23 @@ function drawMeme() {
         let meme = getCurrMeme();
         gCtx.drawImage(elImg, 0, 0, gCanvas.width, gCanvas.height);
         for (let i = 0; i < meme.txts.length; i++) {
-            drawText(meme.txts[i].line, meme.txts[i].size, meme.txts[i].x, meme.txts[i].y)
+            let text = meme.txts[i]
+            drawText(text.line, text.fontFam, text.size, text.txtAlign, text.fontColor, text.strokeColor, text.x, text.y)
         }
     };
     elImg.src = img.url
 }
 
-function drawText(txt, size, x, y) {
-    gCtx.font = `${size}px Impact`
-    gCtx.fillStyle = "white";
+function drawText(txt, fontFam, size, txtAlign, fontColor, strokeColor, x, y) {
+    gCtx.font = `${size}px ${fontFam}`
+    gCtx.textAlign = txtAlign;
+    gCtx.lineWidth = 2;
+    gCtx.fillStyle = fontColor;
+    gCtx.strokeStyle = strokeColor;
     gCtx.fillText(txt, x, y);
     gCtx.strokeText(txt, x, y);
 }
 
-function onSetLocation(ev) {
-    gLocationX = ev.offsetX
-    gLocationY = ev.offsetY
-}
 
 function downloadCanvas(elLink) {
     const data = gCanvas.toDataURL()
@@ -144,29 +225,30 @@ function downloadCanvas(elLink) {
     elLink.download = 'my-meme.png'
 }
 
-
-
-
-
-
-
-
-
-
-// function setShapeAndColors() {
-//     gCurrShape = document.querySelector(".shape-option").value
-//     gCtx.fillStyle = document.querySelector('#fill-color').value
-//     gCtx.strokeStyle = document.querySelector('#strike-color').value
+// function onSetLocation(ev) {
+//     gLocationX = ev.offsetX
+//     gLocationY = ev.offsetY
 // }
 
+// function handleMouseDown(ev) {
+//     let meme = getCurrMeme();
+//     let clickedX = ev.offsetX;
+//     let clickedY = ev.offsetY;
+//     for (let i = 0; i < meme.txts.length; i++) {
+//         console.log(meme)
+//         if (textHitTest(clickedX, clickedY, i)) {
+//             meme.selectedTxtIdx = i;
+//             updateCurrMeme(meme)
+//             console.log(meme)
+//         }
+//     }
+// }
 
-
-function resizeCanvas() {
-    let elContainer =
-        document.querySelector('.canvas-container');
-    // Note: changing the canvas dimension this way clears the canvas
-    gCanvas.width = elContainer.offsetWidth - 100
-    gCanvas.height = elContainer.offsetHeight - 100
-
-    // TODO: redraw..
-}
+// function textHitTest(x, y, txtIdx) {
+//     let meme = getCurrMeme();
+//     let text = meme.txts[txtIdx];
+//     return (x >= text.x &&
+//         x <= text.line.length * text.size &&
+//         y >= text.y - text.size / 2 &&
+//         y <= text.y + text.size / 2);
+// }

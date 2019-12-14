@@ -90,31 +90,33 @@
                         <img src="Meme1 - Sergei\ICONS\decrease font - icon.png" width="40px"
                             onclick="onUpdateSize(-2)">
                     </button>
-                    <button title="Text align left" class="btn controls-item" disabled>
+                    <button title="Text align left" class="btn controls-item" onclick="onUpdateAlign('start')">
                         <img src="Meme1 - Sergei\ICONS\align-to-left.png" width="40px">
                     </button>
-                    <button title="Text align center" class="btn controls-item" disabled>
+                    <button title="Text align center" class="btn controls-item" onclick="onUpdateAlign('center')">
                         <img src="Meme1 - Sergei\ICONS\center-text-alignment.png" width="40px">
                     </button>
-                    <button title="Text align right" class="btn controls-item" disabled>
+                    <button title="Text align right" class="btn controls-item" onclick="onUpdateAlign('end')">
                         <img src="Meme1 - Sergei\ICONS\align-to-right.png" width="40px">
                     </button>
                 </div>
                 <div class="font-style flex">
-                    <select title="Font options" class="font-family controls-item disabled" disabled>
+                    <select title="Font options" class="font-family controls-item" onchange="onUpdateFontFamily(value)">
                         <option value="impact">Impact</option>
                         <option value="ariel">Ariel</option>
                         <option value="helvetica">Helvetica</option>
                         <option value="roboto">Roboto</option>
+                        <option value="calibri">Calibri</option>
                     </select>
-                    <button title="Outline color" class="btn controls-item" disabled>
-                        <img src="Meme1 - Sergei\ICONS\text stroke.png" width="40px">
+                    <button title="Outline color" class="btn controls-item">
+                        <input type="color" class="stroke-color" onchange="onUpdateStrokeColor()">
                     </button>
-                    <button title="Font color" class="btn controls-item" disabled>
-                        <img src="Meme1 - Sergei\ICONS\paint-board-and-brush.png" width="40px">
+                    <button title="Font color" class="btn controls-item">
+                        <input type="color" class="font-color" onchange="onUpdateFontColor()">
+                        <!-- <i class="fas fa-palette fa-3x"></i> -->
                     </button>
                 </div>
-                <div class="drag-items controls-item disabled"></div>
+                <!-- <div class="drag-items controls-item disabled"></div> -->
             </div>
             <div class="action-controls flex space-between">
                 <button title="Download your meme" class="action-btns"><a class=" btn controls-item" href="#"

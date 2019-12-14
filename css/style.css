@@ -68,6 +68,20 @@ button img {
     max-width: 40px;
 }
 
+
+#hack {
+    display: none;
+}
+#hack:checked~.fa-palette {
+    color:blue;
+}
+label:hover {
+    cursor: pointer;
+  }
+
+/* 
+ */
+
 /* Layout */
 
 .grid {
