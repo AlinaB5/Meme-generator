@@ -162,6 +162,8 @@ button img {
 
 .img-container {
     margin-inline-end: 40px;
+    max-width: 400px;
+    border-radius:50%;
 }
 
 .text-container {
