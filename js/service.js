@@ -28,25 +28,28 @@ function findImgById(imgId) {
 }
 
 function createMeme(selectedImgId) {
-    let meme = {
+    const meme = {
         selectedImg: findImgById(selectedImgId),
         selectedTxtIdx: 0,
+        // createTxt() with defaults
         txts: [{
             line: '',
             fontFam: 'Impact',
-            size: 40,
             txtAlign: "start",
-            fontColor: "black",
-            strokeColor: "white",
+            fontColor: "white",
+            strokeColor: "black",
+            size: 60,
+            width: 0,
             x: 80,
             y: 80
         }, {
             line: '',
             fontFam: 'Impact',
-            size: 40,
             txtAlign: "start",
-            fontColor: "black",
-            strokeColor: "white",
+            fontColor: "white",
+            strokeColor: "black",
+            size: 60,
+            width: 0,
             x: 80,
             y: 420
         }]
@@ -61,10 +64,7 @@ function getCurrMeme() {
 
 function updateSize(diff) {
     let meme = gCurrMeme
-    let txtIdx = meme.selectedTxtIdx
-    let currSize = meme.txts[txtIdx].size
-    let newSize = currSize + diff;
-    meme.txts[txtIdx].size = newSize;
+    meme.txts[meme.selectedTxtIdx].size += diff;
 }
 
 function updateTxts(txt) {
@@ -86,8 +86,15 @@ function setTxtIdx() {
 function addLine() {
     let meme = gCurrMeme
     meme.txts.push({
-        line: '', size: 40, fontFam: 'Impact', txtAlign: "start", fontColor: "black",
-        strokeColor: "white", x: 80, y: (gCanvas.height / 2)
+        line: '',
+        fontFam: 'Impact',
+        txtAlign: "start",
+        fontColor: "white",
+        strokeColor: "black",
+        size: 60,
+        width: 0,
+        x: 80,
+        y: (gCanvas.height / 2)
     })
     meme.selectedTxtIdx = meme.txts.length - 1;
 }
@@ -103,32 +110,37 @@ function updateHeight(diff) {
     let txtIdx = meme.selectedTxtIdx
     let currHeight = meme.txts[txtIdx].y
     meme.txts[txtIdx].y = currHeight + diff
+    // try less code
 }
 
 function updateAlign(txtAlign) {
     let meme = gCurrMeme;
     let text = meme.txts[meme.selectedTxtIdx]
-    switch (txtAlign) {
+    // try less code
+    text.txtAlign = txtAlign;
+    switch (text.txtAlign) {
         case "start":
-            text.txtAlign = "start"
+            // text.txtAlign = "start"
             text.x = 80;
             break;
         case "center":
-            text.txtAlign = "center"
+            // text.txtAlign = "center"
             text.x = gCanvas.width / 2;
             break;
 
         case "end":
-            text.txtAlign = "end"
+            // text.txtAlign = "end"
             text.x = gCanvas.width - 80;
             break;
     }
+
 }
 
-function updateFontFamily(fontFamily){
+function updateFontFamily(fontFamily) {
     let meme = gCurrMeme;
     let text = meme.txts[meme.selectedTxtIdx]
 
+    // try less code!
     switch (fontFamily) {
         case "impact":
             text.fontFam = 'Impact'
@@ -148,12 +160,19 @@ function updateFontFamily(fontFamily){
     }
 }
 
-function updateFontColor(fontColor){
+function updateFontColor(fontColor) {
     let meme = gCurrMeme;
-    meme.txts[meme.selectedTxtIdx].fontColor = fontColor
+    let textIdx = meme.selectedTxtIdx
+    meme.txts[textIdx].fontColor = fontColor
 }
 
-function updateStrokeColor(strokeColor){
+function updateStrokeColor(strokeColor) {
     let meme = gCurrMeme;
-    meme.txts[meme.selectedTxtIdx].strokeColor = strokeColor
+    let textIdx = meme.selectedTxtIdx
+    meme.txts[textIdx].strokeColor = strokeColor
+}
+
+function updateTxtWidth(textWidth) {
+    let meme = gCurrMeme;
+    meme.txts[meme.selectedTxtIdx].width = textWidth;
 }

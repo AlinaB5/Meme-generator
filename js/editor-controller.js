@@ -1,6 +1,5 @@
 'use strict'
-
-let gCanvas, gCtx, gCurrImg;
+let gCanvas, gCtx, gCurrImg, gDownloadMode = false;
 
 function init() {
     createImages();
@@ -10,8 +9,8 @@ function init() {
 }
 
 function setImg(imgId) {
-    gCurrImg = findImgById(imgId);
     createMeme(imgId)
+    gCurrImg = findImgById(imgId);
     onOpenEditor()
 }
 
@@ -41,6 +40,7 @@ function onUpdateTxts() {
     } else {
         onAddLine()
     }
+    setTextWidth(meme.txts[meme.selectedTxtIdx].line)
     drawMeme();
 }
 
@@ -52,6 +52,8 @@ function onSetTxtIdx() {
     } else {
         document.querySelector('.txt-input').value = '';
     }
+    drawRect(meme.txts[meme.selectedTxtIdx])
+    drawMeme();
 }
 
 function onAddLine() {
@@ -109,17 +111,41 @@ function onUpdateStrokeColor() {
 function drawMeme() {
     let elImg = new Image()
     let img = gCurrImg;
+    // get meme
+    // get img by id
+
     elImg.onload = () => {
         gCanvas.width = elImg.width;
         gCanvas.height = elImg.height;
         let meme = getCurrMeme();
         gCtx.drawImage(elImg, 0, 0, gCanvas.width, gCanvas.height);
-        for (let i = 0; i < meme.txts.length; i++) {
-            let text = meme.txts[i]
-            drawText(text)
+        // instead of for - foreach
+        if (gDownloadMode) {
+            for (let i = 0; i < meme.txts.length; i++) {
+                let text = meme.txts[i]
+                drawText(text)
+                // gDownloadMode = false;
+            }
+        } else {
+            drawRect(meme.txts[meme.selectedTxtIdx])
+            console.log("draw-this", "download mode ",gDownloadMode)
+            for (let i = 0; i < meme.txts.length; i++) {
+                let text = meme.txts[i]
+                drawText(text)
+            } 
         }
     };
     elImg.src = img.url
+}
+
+function drawRect(text) {
+    gCtx.beginPath();
+    gCtx.rect(text.x, text.y - text.size, text.width + 20, text.size * 1.5)
+    gCtx.fillStyle = "rgba(250,250,250,0.2)"
+    gCtx.strokeStyle = 'white';
+    gCtx.fillRect(text.x, text.y - text.size, text.width + 20, text.size * 1.5)
+    gCtx.stroke();
+    gCtx.closePath();
 }
 
 function drawText(text) {
@@ -132,8 +158,40 @@ function drawText(text) {
     gCtx.strokeText(text.line, text.x, text.y);
 }
 
-function downloadCanvas(elLink) {
+function onDownloadCanvas(elLink) {
+    gDownloadMode = true
+    drawMeme();
     const data = gCanvas.toDataURL()
     elLink.href = data
     elLink.download = 'my-meme.png'
+}
+
+function setTextWidth(textLine) {
+    let textWidth = gCtx.measureText(textLine).width;
+    updateTxtWidth(textWidth);
+}
+
+function handleMouseDown(ev) {
+    ev.preventDefault();
+    let meme = getCurrMeme();
+    let clickedX = ev.offsetX;
+    let clickedY = ev.offsetY;
+    for (let i = 0; i < meme.txts.length; i++) {
+        console.log("outside of hit test", clickedX, clickedY)
+        if (textHitTest(clickedX, clickedY, i)) {
+
+            meme.selectedTxtIdx = i;
+            console.log(clickedX, clickedY)
+            console.log("texthit")
+        }
+    }
+}
+
+function textHitTest(x, y, txtIdx) {
+    let meme = getCurrMeme();
+    let text = meme.txts[txtIdx];
+    return (x >= text.x - 30 &&
+        x <= text.x + text.width &&
+        y >= text.y - text.size &&
+        y <= text.y);
 }
